@@ -1,0 +1,105 @@
+# Ejemplo del Taller de Microservicios y Google Cloud
+
+Este ejemplo muestra los pasos necesarios para deplegar un pequeño front en Spring Boot unido a los servicios de Google Cloud, a modo de Microservicio_
+
+## Inicio 🚀
+
+_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento para propósitos de desarrollo y pruebas._
+
+Mira **Deployment** para conocer como desplegar el proyecto.
+
+
+### Pre-requisitos 📋
+
+_Que cosas necesitas para instalar el software y como instalarlas_
+
+```
+JAVA_
+Spring Boot_
+Google Cloud_
+Dockers_
+Datos de Partida_
+https://data.europa.eu/euodp/es/data/dataset/covid-19-coronavirus-data_
+https://github.com/datadista/datasets/tree/master/COVID%2019_
+
+```
+
+### Instalación 🔧
+
+_Para ejecutar el ejemplo precisamos varias cosas, por un lado descargar el proyecto de Spring Boot y configurar la URL del servicio de GCloud, luego lo compilamos y lo epaquetamos usando el DockerFile_
+
+_Empaquetado con Docker File, debes ejecutarlo en el mismo directorio donde este el dockerfile_
+
+```
+docker build -t ejemplo-cloud:1.0 .
+```
+
+_En el caso de GCloud debemos tener contratado_
+
+```
+Cloud Storage_
+AI Platform_
+```
+
+_En el caso de GCloud debemos tener contratado_
+
+```
+Cloud Storage_
+AI Platform_
+```
+
+_Para ejecutar el ejemplo en local de Python:_
+
+```
+https://cloud.google.com/python/setup?hl=es-419
+```
+
+_Después debemos obtener nuestros conjuntos de entrenamiento y las dependencias.
+Y entrenamos el modelo localmente._
+```
+gcloud ai-platform local train \
+  --package-path trainer \
+  --module-name trainer.task \
+  --job-dir local-training-output
+```
+
+_Una vez lo tenemos pasamos a entrenarlo con AI Platform_
+```
+gcloud ai-platform jobs submit training $JOB_NAME \
+  --package-path trainer/ \
+  --module-name trainer.task \
+  --region $REGION \
+  --python-version 3.5 \
+  --runtime-version 1.13 \
+  --job-dir $JOB_DIR \
+  --stream-logs
+```
+
+_Podemos ajustar los hiperparámetros_
+```
+https://cloud.google.com/ml-engine/docs/tensorflow/hyperparameter-tuning-overview?hl=es-419
+```
+
+_Una vez creado el modelo podemos unirlo con Keras, y una vez lo tenemos debemos unirlo a la aplicación Java, que tenemos realizada en Spring Boot, para realizar los inputs y los outputs._
+
+
+
+## Construido con 🛠️
+
+* [Netbeans](http://www.dropwizard.io/1.0.2/docs/) - IDE
+* [Maven](https://maven.apache.org/) - Manejador de dependencias
+* [GCloud](https://rometools.github.io/rome/) - Herramientas de Google Cloud
+* [Tensorflow](https://www.tensorflow.org/) - Framework para Deep Learning
+* [Keras](https://keras.io/) - API en Python para Deep Learning
+
+## Licencia 📄
+
+Este proyecto está bajo la Licencia (Tu Licencia) - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+
+## Expresiones de Gratitud 🎁
+
+* Agradecimientos a Google Europa y muy especialmente a Federica ❤️
+
+
+
+---

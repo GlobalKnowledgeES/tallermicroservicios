@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Riesgo Covid 19</title>
+        <style>
+            #resultado{display: none;}
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script>
+            document.getElementById("enviar").addEventListener("click", function (event) {
+                $.ajax({
+                    url: './prediccion',
+                    type: 'GET',
+                    data: {
+                        'provincia': $("#provincia").val(),
+                        'edad':$("#edad").val()
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        $("#probabilidad").html(data.probabilidad);
+                    },
+                    error: function (request, error)
+                    {
+                        alert("Se ha producido un error inesperado " + JSON.stringify(request));
+                    }
+                });
+                event.preventDefault();
+            });
+        </script>
+        <style>
+            body{font-size: 12px}
+            h1{font-size: 1.4em;}
+            h2{font-size: 1.2em;}
+            #cnt{max-width: 1024px; margin: 0 auto;}
+            #enviar{border-radius: 20px; padding: 10px 20px; display: inline-block;color: white; background-color: blue; text-decoration: none;}
+        </style>
+    </head>
+    <body>
+        <section id="cnt">
+            <header>
+                <h1>Aplicacion de ejemplo de riesgo de sufrir COVID-19</h1>
+            </header>
+            <form method="post" action="#" name="formulario">
+                <p>
+                    <label for="edad">Introduce tu edad</label>
+                </p>
+                <p>
+                    <input type="range" min="1" max="120" step="1" id="edad"/>
+                </p>
+                <p>
+                    <label for="provincia">Selecciona tu provincia</label>
+                </p>
+                <p>
+                    <select id="provincia">
+                        <option></option>
+                    </select>
+                </p>
+                <a href="#" id="enviar">Predecir</a>
+            </form>
+
+        </section>
+        <section id="resultado">
+            <article>
+                <header>
+                    <h2>Tu probabilidad es</h2>
+                </header>
+                <p id="probabilidad"></p>
+            </article>
+        </section>
+    </body>
+</html>
+
